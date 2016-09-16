@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/17/2016 01:19:26
+-- Date Created: 09/17/2016 01:47:38
 -- Generated from EDMX file: \\mac\home\documents\visual studio 2015\Projects\MedicalDataManager\MedicalDataManagerModel\MedicalDataManagerDataBase.edmx
 -- --------------------------------------------------
 
@@ -38,6 +38,21 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_TokenPerson]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Tokens] DROP CONSTRAINT [FK_TokenPerson];
 GO
+IF OBJECT_ID(N'[dbo].[FK_DosageContainsSubstancesDosage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DosageContainsSubstances] DROP CONSTRAINT [FK_DosageContainsSubstancesDosage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_DosageContainsSubstancesSubstance]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DosageContainsSubstances] DROP CONSTRAINT [FK_DosageContainsSubstancesSubstance];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MedicationPlanDevice]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MedicationPlans] DROP CONSTRAINT [FK_MedicationPlanDevice];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MedicationPlanToken]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MedicationPlans] DROP CONSTRAINT [FK_MedicationPlanToken];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MedicationPlanDosage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MedicationPlans] DROP CONSTRAINT [FK_MedicationPlanDosage];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -63,6 +78,18 @@ IF OBJECT_ID(N'[dbo].[ActionTypes]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Actions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Actions];
+GO
+IF OBJECT_ID(N'[dbo].[Substances]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Substances];
+GO
+IF OBJECT_ID(N'[dbo].[Dosages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Dosages];
+GO
+IF OBJECT_ID(N'[dbo].[DosageContainsSubstances]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DosageContainsSubstances];
+GO
+IF OBJECT_ID(N'[dbo].[MedicationPlans]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MedicationPlans];
 GO
 
 -- --------------------------------------------------
@@ -127,6 +154,40 @@ CREATE TABLE [dbo].[Actions] (
 );
 GO
 
+-- Creating table 'Substances'
+CREATE TABLE [dbo].[Substances] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [SubstanceName] nvarchar(max)  NOT NULL,
+    [DosageId] int  NULL
+);
+GO
+
+-- Creating table 'Dosages'
+CREATE TABLE [dbo].[Dosages] (
+    [Id] int IDENTITY(1,1) NOT NULL
+);
+GO
+
+-- Creating table 'DosageContainsSubstances'
+CREATE TABLE [dbo].[DosageContainsSubstances] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DosageId] int  NOT NULL,
+    [SubstanceId] int  NOT NULL
+);
+GO
+
+-- Creating table 'MedicationPlans'
+CREATE TABLE [dbo].[MedicationPlans] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DeviceId] uniqueidentifier  NOT NULL,
+    [TokenId] uniqueidentifier  NOT NULL,
+    [Critical] nvarchar(max)  NOT NULL,
+    [DosageId] int  NOT NULL,
+    [ValidFrom] nvarchar(max)  NOT NULL,
+    [Validto] nvarchar(max)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -170,6 +231,30 @@ GO
 -- Creating primary key on [Id] in table 'Actions'
 ALTER TABLE [dbo].[Actions]
 ADD CONSTRAINT [PK_Actions]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Substances'
+ALTER TABLE [dbo].[Substances]
+ADD CONSTRAINT [PK_Substances]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Dosages'
+ALTER TABLE [dbo].[Dosages]
+ADD CONSTRAINT [PK_Dosages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'DosageContainsSubstances'
+ALTER TABLE [dbo].[DosageContainsSubstances]
+ADD CONSTRAINT [PK_DosageContainsSubstances]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'MedicationPlans'
+ALTER TABLE [dbo].[MedicationPlans]
+ADD CONSTRAINT [PK_MedicationPlans]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -280,6 +365,81 @@ GO
 CREATE INDEX [IX_FK_TokenPerson]
 ON [dbo].[Tokens]
     ([Person_Id]);
+GO
+
+-- Creating foreign key on [DosageId] in table 'DosageContainsSubstances'
+ALTER TABLE [dbo].[DosageContainsSubstances]
+ADD CONSTRAINT [FK_DosageContainsSubstancesDosage]
+    FOREIGN KEY ([DosageId])
+    REFERENCES [dbo].[Dosages]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DosageContainsSubstancesDosage'
+CREATE INDEX [IX_FK_DosageContainsSubstancesDosage]
+ON [dbo].[DosageContainsSubstances]
+    ([DosageId]);
+GO
+
+-- Creating foreign key on [SubstanceId] in table 'DosageContainsSubstances'
+ALTER TABLE [dbo].[DosageContainsSubstances]
+ADD CONSTRAINT [FK_DosageContainsSubstancesSubstance]
+    FOREIGN KEY ([SubstanceId])
+    REFERENCES [dbo].[Substances]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DosageContainsSubstancesSubstance'
+CREATE INDEX [IX_FK_DosageContainsSubstancesSubstance]
+ON [dbo].[DosageContainsSubstances]
+    ([SubstanceId]);
+GO
+
+-- Creating foreign key on [DeviceId] in table 'MedicationPlans'
+ALTER TABLE [dbo].[MedicationPlans]
+ADD CONSTRAINT [FK_MedicationPlanDevice]
+    FOREIGN KEY ([DeviceId])
+    REFERENCES [dbo].[Devices]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MedicationPlanDevice'
+CREATE INDEX [IX_FK_MedicationPlanDevice]
+ON [dbo].[MedicationPlans]
+    ([DeviceId]);
+GO
+
+-- Creating foreign key on [TokenId] in table 'MedicationPlans'
+ALTER TABLE [dbo].[MedicationPlans]
+ADD CONSTRAINT [FK_MedicationPlanToken]
+    FOREIGN KEY ([TokenId])
+    REFERENCES [dbo].[Tokens]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MedicationPlanToken'
+CREATE INDEX [IX_FK_MedicationPlanToken]
+ON [dbo].[MedicationPlans]
+    ([TokenId]);
+GO
+
+-- Creating foreign key on [DosageId] in table 'MedicationPlans'
+ALTER TABLE [dbo].[MedicationPlans]
+ADD CONSTRAINT [FK_MedicationPlanDosage]
+    FOREIGN KEY ([DosageId])
+    REFERENCES [dbo].[Dosages]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MedicationPlanDosage'
+CREATE INDEX [IX_FK_MedicationPlanDosage]
+ON [dbo].[MedicationPlans]
+    ([DosageId]);
 GO
 
 -- --------------------------------------------------

@@ -13,6 +13,10 @@
     <EntitySet Name="Users" EntityType="MedicalDataManagerDataBase.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ActionTypes" EntityType="MedicalDataManagerDataBase.Store.ActionTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Actions" EntityType="MedicalDataManagerDataBase.Store.Actions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Substances" EntityType="MedicalDataManagerDataBase.Store.Substances" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Dosages" EntityType="MedicalDataManagerDataBase.Store.Dosages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DosageContainsSubstances" EntityType="MedicalDataManagerDataBase.Store.DosageContainsSubstances" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MedicationPlans" EntityType="MedicalDataManagerDataBase.Store.MedicationPlans" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserPerson" Association="MedicalDataManagerDataBase.Store.UserPerson">
       <End Role="User" EntitySet="Users" />
       <End Role="Person" EntitySet="People" />
@@ -40,6 +44,26 @@
     <AssociationSet Name="TokenPerson" Association="MedicalDataManagerDataBase.Store.TokenPerson">
       <End Role="Token" EntitySet="Tokens" />
       <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="DosageContainsSubstancesDosage" Association="MedicalDataManagerDataBase.Store.DosageContainsSubstancesDosage">
+      <End Role="DosageContainsSubstances" EntitySet="DosageContainsSubstances" />
+      <End Role="Dosage" EntitySet="Dosages" />
+    </AssociationSet>
+    <AssociationSet Name="DosageContainsSubstancesSubstance" Association="MedicalDataManagerDataBase.Store.DosageContainsSubstancesSubstance">
+      <End Role="DosageContainsSubstances" EntitySet="DosageContainsSubstances" />
+      <End Role="Substance" EntitySet="Substances" />
+    </AssociationSet>
+    <AssociationSet Name="MedicationPlanDevice" Association="MedicalDataManagerDataBase.Store.MedicationPlanDevice">
+      <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+      <End Role="Device" EntitySet="Devices" />
+    </AssociationSet>
+    <AssociationSet Name="MedicationPlanToken" Association="MedicalDataManagerDataBase.Store.MedicationPlanToken">
+      <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+      <End Role="Token" EntitySet="Tokens" />
+    </AssociationSet>
+    <AssociationSet Name="MedicationPlanDosage" Association="MedicalDataManagerDataBase.Store.MedicationPlanDosage">
+      <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+      <End Role="Dosage" EntitySet="Dosages" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="People">
@@ -99,6 +123,40 @@
     <Property Name="DeviceId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TimeStamp" Type="datetime" Nullable="false" />
     <Property Name="Payload" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Substances">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubstanceName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DosageId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Dosages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DosageContainsSubstances">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DosageId" Type="int" Nullable="false" />
+    <Property Name="SubstanceId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MedicationPlans">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeviceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TokenId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Critical" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DosageId" Type="int" Nullable="false" />
+    <Property Name="ValidFrom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Validto" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="UserPerson">
     <End Role="User" Type="MedicalDataManagerDataBase.Store.Users" Multiplicity="*" />
@@ -184,6 +242,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="DosageContainsSubstancesDosage">
+    <End Role="DosageContainsSubstances" Type="MedicalDataManagerDataBase.Store.DosageContainsSubstances" Multiplicity="*" />
+    <End Role="Dosage" Type="MedicalDataManagerDataBase.Store.Dosages" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Dosage">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DosageContainsSubstances">
+        <PropertyRef Name="DosageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DosageContainsSubstancesSubstance">
+    <End Role="DosageContainsSubstances" Type="MedicalDataManagerDataBase.Store.DosageContainsSubstances" Multiplicity="*" />
+    <End Role="Substance" Type="MedicalDataManagerDataBase.Store.Substances" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Substance">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DosageContainsSubstances">
+        <PropertyRef Name="SubstanceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicationPlanDevice">
+    <End Role="MedicationPlan" Type="MedicalDataManagerDataBase.Store.MedicationPlans" Multiplicity="*" />
+    <End Role="Device" Type="MedicalDataManagerDataBase.Store.Devices" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Device">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicationPlan">
+        <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicationPlanToken">
+    <End Role="MedicationPlan" Type="MedicalDataManagerDataBase.Store.MedicationPlans" Multiplicity="*" />
+    <End Role="Token" Type="MedicalDataManagerDataBase.Store.Tokens" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Token">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicationPlan">
+        <PropertyRef Name="TokenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicationPlanDosage">
+    <End Role="MedicationPlan" Type="MedicalDataManagerDataBase.Store.MedicationPlans" Multiplicity="*" />
+    <End Role="Dosage" Type="MedicalDataManagerDataBase.Store.Dosages" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Dosage">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicationPlan">
+        <PropertyRef Name="DosageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -223,6 +341,30 @@
           <AssociationSet Name="TokenPerson" Association="MedicalDataManagerDataBase.TokenPerson">
             <End Role="Token" EntitySet="Tokens" />
             <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <EntitySet Name="Substances" EntityType="MedicalDataManagerDataBase.Substance" />
+          <EntitySet Name="Dosages" EntityType="MedicalDataManagerDataBase.Dosage" />
+          <EntitySet Name="DosageContainsSubstances" EntityType="MedicalDataManagerDataBase.DosageContainsSubstances" />
+          <AssociationSet Name="DosageContainsSubstancesDosage" Association="MedicalDataManagerDataBase.DosageContainsSubstancesDosage">
+            <End Role="DosageContainsSubstances" EntitySet="DosageContainsSubstances" />
+            <End Role="Dosage" EntitySet="Dosages" />
+          </AssociationSet>
+          <AssociationSet Name="DosageContainsSubstancesSubstance" Association="MedicalDataManagerDataBase.DosageContainsSubstancesSubstance">
+            <End Role="DosageContainsSubstances" EntitySet="DosageContainsSubstances" />
+            <End Role="Substance" EntitySet="Substances" />
+          </AssociationSet>
+          <EntitySet Name="MedicationPlans" EntityType="MedicalDataManagerDataBase.MedicationPlan" />
+          <AssociationSet Name="MedicationPlanDevice" Association="MedicalDataManagerDataBase.MedicationPlanDevice">
+            <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="MedicationPlanToken" Association="MedicalDataManagerDataBase.MedicationPlanToken">
+            <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+          <AssociationSet Name="MedicationPlanDosage" Association="MedicalDataManagerDataBase.MedicationPlanDosage">
+            <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+            <End Role="Dosage" EntitySet="Dosages" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Person">
@@ -358,6 +500,105 @@
           <End Type="MedicalDataManagerDataBase.Token" Role="Token" Multiplicity="1" />
           <End Type="MedicalDataManagerDataBase.Person" Role="Person" Multiplicity="1" />
         </Association>
+        <EntityType Name="Substance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubstanceName" Type="String" Nullable="false" />
+          <Property Name="DosageId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Dosage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="DosageContainsSubstances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Dosage" Relationship="MedicalDataManagerDataBase.DosageContainsSubstancesDosage" FromRole="DosageContainsSubstances" ToRole="Dosage" />
+          <Property Name="DosageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Substance" Relationship="MedicalDataManagerDataBase.DosageContainsSubstancesSubstance" FromRole="DosageContainsSubstances" ToRole="Substance" />
+          <Property Name="SubstanceId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="DosageContainsSubstancesDosage">
+          <End Type="MedicalDataManagerDataBase.DosageContainsSubstances" Role="DosageContainsSubstances" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Dosage" Role="Dosage" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Dosage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DosageContainsSubstances">
+              <PropertyRef Name="DosageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DosageContainsSubstancesSubstance">
+          <End Type="MedicalDataManagerDataBase.DosageContainsSubstances" Role="DosageContainsSubstances" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Substance" Role="Substance" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Substance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DosageContainsSubstances">
+              <PropertyRef Name="SubstanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MedicationPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.MedicationPlanDevice" FromRole="MedicationPlan" ToRole="Device" />
+          <Property Name="DeviceId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.MedicationPlanToken" FromRole="MedicationPlan" ToRole="Token" />
+          <Property Name="TokenId" Type="Guid" Nullable="false" />
+          <Property Name="Critical" Type="String" Nullable="false" />
+          <NavigationProperty Name="Dosage" Relationship="MedicalDataManagerDataBase.MedicationPlanDosage" FromRole="MedicationPlan" ToRole="Dosage" />
+          <Property Name="DosageId" Type="Int32" Nullable="false" />
+          <Property Name="ValidFrom" Type="String" Nullable="false" />
+          <Property Name="Validto" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="MedicationPlanDevice">
+          <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicationPlan">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicationPlanToken">
+          <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Token" Role="Token" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Token">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicationPlan">
+              <PropertyRef Name="TokenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicationPlanDosage">
+          <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Dosage" Role="Dosage" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Dosage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicationPlan">
+              <PropertyRef Name="DosageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -424,6 +665,44 @@
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
           <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
           <ScalarProperty Name="Payload" ColumnName="Payload" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Substances">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.Substance)">
+        <MappingFragment StoreEntitySet="Substances">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SubstanceName" ColumnName="SubstanceName" />
+          <ScalarProperty Name="DosageId" ColumnName="DosageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dosages">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.Dosage)">
+        <MappingFragment StoreEntitySet="Dosages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DosageContainsSubstances">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.DosageContainsSubstances)">
+        <MappingFragment StoreEntitySet="DosageContainsSubstances">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DosageId" ColumnName="DosageId" />
+          <ScalarProperty Name="SubstanceId" ColumnName="SubstanceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedicationPlans">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.MedicationPlan)">
+        <MappingFragment StoreEntitySet="MedicationPlans">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+          <ScalarProperty Name="Critical" ColumnName="Critical" />
+          <ScalarProperty Name="DosageId" ColumnName="DosageId" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="Validto" ColumnName="Validto" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

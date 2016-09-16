@@ -32,5 +32,9 @@ namespace MedicalDataManagerModel
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ActionType> ActionTypes { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<Substance> Substances { get; set; }
+        public virtual DbSet<Dosage> Dosages { get; set; }
+        public virtual DbSet<DosageContainsSubstances> DosageContainsSubstances { get; set; }
+        public virtual DbSet<MedicationPlan> MedicationPlans { get; set; }
     }
 }

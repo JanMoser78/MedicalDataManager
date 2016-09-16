@@ -19,6 +19,15 @@
         <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice" />
         <AssociationConnector Association="MedicalDataManagerDataBase.TokenPerson" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Substance" Width="1.5" PointX="11.625" PointY="2.125" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Dosage" Width="1.5" PointX="16" PointY="2.125" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.DosageContainsSubstances" Width="1.5" PointX="13.75" PointY="3.5" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DosageContainsSubstancesDosage" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DosageContainsSubstancesSubstance" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.MedicationPlan" Width="1.5" PointX="18" PointY="3.25" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDevice" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanToken" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDosage" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
