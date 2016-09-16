@@ -6,19 +6,19 @@
     <edmx:Diagrams>
       <Diagram DiagramId="eb458c41e568410f9505a9e76a58a079" Name="Diagram1" >
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Person" Width="1.5" PointX="7.875" PointY="2.75" />
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Device" Width="1.5" PointX="3.5" PointY="0.5" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Device" Width="1.5" PointX="2.5" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Token" Width="1.5" PointX="5.375" PointY="0.5" />
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.DeviceUsesToken" Width="1.5" PointX="2.375" PointY="2.5" />
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.User" Width="1.5" PointX="5.625" PointY="3.375" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.DeviceUsesToken" Width="2.375" PointX="2.375" PointY="2.75" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.User" Width="1.5" PointX="5.125" PointY="3" />
         <AssociationConnector Association="MedicalDataManagerDataBase.UserPerson" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.PersonHasToken" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenToken" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.ActionType" Width="1.5" PointX="12.125" PointY="0.625" />
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Action" Width="1.5" PointX="10.25" PointY="0.625" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Action" Width="1.5" PointX="9.75" PointY="0.625" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionActionType" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionDevice" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenToken" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.TokenPerson" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
