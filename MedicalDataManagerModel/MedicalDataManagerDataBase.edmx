@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="MedicalDataManagerDataBase.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="MedicalDataManagerDataBaseTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedicalDataManagerDataBase" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MedicalDataManagerDataBaseContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="People1" EntityType="MedicalDataManagerDataBase.Person" />
+          <EntitySet Name="Devices" EntityType="MedicalDataManagerDataBase.Device" />
+          <EntitySet Name="Tokens" EntityType="MedicalDataManagerDataBase.Token" />
+          <EntitySet Name="DeviceUsesTokens" EntityType="MedicalDataManagerDataBase.DeviceUsesToken" />
+          <EntitySet Name="Users" EntityType="MedicalDataManagerDataBase.User" />
+          <AssociationSet Name="UserPerson" Association="MedicalDataManagerDataBase.UserPerson">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Person" EntitySet="People1" />
+          </AssociationSet>
+          <AssociationSet Name="PersonHasToken" Association="MedicalDataManagerDataBase.PersonHasToken">
+            <End Role="Token" EntitySet="Tokens" />
+            <End Role="Person" EntitySet="People1" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceUsesTokenDevice" Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice">
+            <End Role="DeviceUsesToken" EntitySet="DeviceUsesTokens" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceUsesTokenToken" Association="MedicalDataManagerDataBase.DeviceUsesTokenToken">
+            <End Role="DeviceUsesToken" EntitySet="DeviceUsesTokens" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+          <EntitySet Name="ActionTypes" EntityType="MedicalDataManagerDataBase.ActionType" />
+          <EntitySet Name="Actions" EntityType="MedicalDataManagerDataBase.Action" />
+          <AssociationSet Name="ActionToken" Association="MedicalDataManagerDataBase.ActionToken">
+            <End Role="Action" EntitySet="Actions" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+          <AssociationSet Name="ActionActionType" Association="MedicalDataManagerDataBase.ActionActionType">
+            <End Role="Action" EntitySet="Actions" />
+            <End Role="ActionType" EntitySet="ActionTypes" />
+          </AssociationSet>
+          <AssociationSet Name="ActionDevice" Association="MedicalDataManagerDataBase.ActionDevice">
+            <End Role="Action" EntitySet="Actions" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" Nullable="false" />
+          <Property Name="Lastname" Type="String" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MedicalDataManagerDataBase.UserPerson" FromRole="Person" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DeviceUsesTokens" Relationship="MedicalDataManagerDataBase.DeviceUsesTokenDevice" FromRole="Device" ToRole="DeviceUsesToken" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Person" Relationship="MedicalDataManagerDataBase.PersonHasToken" FromRole="Token" ToRole="Person" />
+          <NavigationProperty Name="DeviceUsesTokens" Relationship="MedicalDataManagerDataBase.DeviceUsesTokenToken" FromRole="Token" ToRole="DeviceUsesToken" />
+        </EntityType>
+        <EntityType Name="DeviceUsesToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.DeviceUsesTokenDevice" FromRole="DeviceUsesToken" ToRole="Device" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.DeviceUsesTokenToken" FromRole="DeviceUsesToken" ToRole="Token" />
+          <Property Name="TokenId" Type="Int32" Nullable="false" />
+          <Property Name="ReadOnly" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" />
+          <Property Name="PassHash" Type="String" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="MedicalDataManagerDataBase.UserPerson" FromRole="User" ToRole="Person" />
+        </EntityType>
+        <Association Name="UserPerson">
+          <End Type="MedicalDataManagerDataBase.User" Role="User" Multiplicity="0..1" />
+          <End Type="MedicalDataManagerDataBase.Person" Role="Person" Multiplicity="1" />
+        </Association>
+        <Association Name="PersonHasToken">
+          <End Type="MedicalDataManagerDataBase.Token" Role="Token" Multiplicity="1" />
+          <End Type="MedicalDataManagerDataBase.Person" Role="Person" Multiplicity="1" />
+        </Association>
+        <Association Name="DeviceUsesTokenDevice">
+          <End Type="MedicalDataManagerDataBase.DeviceUsesToken" Role="DeviceUsesToken" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeviceUsesToken">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeviceUsesTokenToken">
+          <End Type="MedicalDataManagerDataBase.DeviceUsesToken" Role="DeviceUsesToken" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Token" Role="Token" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Token">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeviceUsesToken">
+              <PropertyRef Name="TokenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ActionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.ActionToken" FromRole="Action" ToRole="Token" />
+          <Property Name="TokenId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ActionType" Relationship="MedicalDataManagerDataBase.ActionActionType" FromRole="Action" ToRole="ActionType" />
+          <Property Name="ActionTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.ActionDevice" FromRole="Action" ToRole="Device" />
+          <Property Name="DeviceId" Type="Guid" Nullable="false" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="ActionToken">
+          <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Token" Role="Token" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Token">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="TokenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ActionActionType">
+          <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.ActionType" Role="ActionType" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="ActionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="ActionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ActionDevice">
+          <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="MedicalDataManagerDataBase" />
+        <Alias Key="Target" Value="MedicalDataManagerDataBase.Store" />
+        <EntityContainerMapping CdmEntityContainer="MedicalDataManagerDataBaseContainer" StorageEntityContainer="MedicalDataManagerDataBaseTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
