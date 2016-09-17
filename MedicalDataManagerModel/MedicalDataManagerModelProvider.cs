@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using MedicalDataManagerModel.Annotations;
 
 namespace MedicalDataManagerModel
 {
@@ -17,7 +18,7 @@ namespace MedicalDataManagerModel
     {
         public void SaveAction(int actionid, string payload, DateTime timeStamp, string devUid)
         {
-            DecryptPayload(payload);
+            int token = DecryptPayload(payload);
             using (var context = new MedicalDataManagerDataBaseContainer())
             {
                 Action act = new Action();
@@ -25,7 +26,7 @@ namespace MedicalDataManagerModel
                 act.DeviceId = devUid;
                 act.Payload = payload;
                 act.TimeStamp = timeStamp;
-                act.TokenId = 666;
+                act.TokenId = token;
                 context.Actions.Add(act);
                 context.SaveChanges();
             }
@@ -46,21 +47,18 @@ namespace MedicalDataManagerModel
                 var device = context.Devices.SingleOrDefault(x => x.Id == deviceId);
                 if (device != null)
                 {
-                    int nbrofCprtmnts = device.NbrOfCompartments;
-
-                    int ctr = 0;
+                   
                    // List<string> allCompartmentDataOfDevice = new List<string>();
                     foreach (var medicationPlan in medPlans)
                     {
-                        if (!(ctr < nbrofCprtmnts))
-                        {
+                        
                             short token = (short) medicationPlan.TokenId;
                             byte dosage = (byte) medicationPlan.DosageId;
                             long from = medicationPlan.ValidFrom.Ticks;
                             long to = medicationPlan.Validto.Ticks;
                             byte compartment = (byte) medicationPlan.CompartmentNbr;
                             byte critical = (byte) (medicationPlan.Critical ? 1 : 0);
-                            ctr++;
+                           
                             StringBuilder sb = new StringBuilder();
                             sb.Append(compartment.ToString("X2"));
                             sb.Append(token.ToString("X4"));
@@ -71,39 +69,81 @@ namespace MedicalDataManagerModel
                             return sb.ToString();
                         }
                         
-                    }
+                    
                    
                 }
                 
             }
             return  "00FFFF";
         }
-        private Action DecryptPayload(string payload)
+        public int DecryptPayload(string payload)
         {
-
-            string testString = "04000000000000000000000000000000000000000000000000000000000000FF";
+            int token = 0;
+            string testString = "0104007b0003e8000000000000000000000000000000000000000000000000000000000000000000";
             char[] theChars = payload.ToCharArray();
             List<int> intVals = new List<int>();
-            for (int i = 0; i < theChars.Length; i = i + 2)
-            {
-                char[] hexChar = new char[2];
-                hexChar[0] = theChars[i];
-                hexChar[1] = theChars[i + 1];
-                string val = new string(hexChar);
-                intVals.Add(FromHex(val));
 
-            }
-            return new Action();
+            //ActionId
+            char[] hexChar = new char[2];
+            hexChar[0] = theChars[0];
+            hexChar[1] = theChars[1];
+            string val = new string(hexChar);
+            intVals.Add((int)FromHex(val));
+            
+            //comId
+           hexChar = new char[2];
+            hexChar[0] = theChars[2];
+            hexChar[1] = theChars[3];
+             val = new string(hexChar);
+            intVals.Add((int)FromHex(val));
+
+            //token
+            hexChar = new char[4];
+            hexChar[0] = theChars[4];
+            hexChar[1] = theChars[5];
+            hexChar[2] = theChars[6];
+            hexChar[3] = theChars[7];
+            val = new string(hexChar);
+            intVals.Add((int)FromHex(val));
+            token = (int) FromHex(val);
+
+            // timestamp
+            hexChar = new char[16];
+            hexChar[0] = theChars[16];
+            hexChar[1] = theChars[17];
+            hexChar[2] = theChars[18];
+            hexChar[3] = theChars[19];
+            hexChar[4] = theChars[20];
+            hexChar[5] = theChars[21];
+            hexChar[6] = theChars[22];
+            hexChar[7] = theChars[23];
+            hexChar[8] = theChars[24];
+            hexChar[9] = theChars[25];
+            hexChar[10] = theChars[26];
+            hexChar[11] = theChars[27];
+            hexChar[12] = theChars[28];
+            hexChar[13] = theChars[29];
+            hexChar[14] = theChars[30];
+            hexChar[15] = theChars[31];
+
+            val = new string(hexChar);
+            long result = (FromHex(val));
+
+
+
+
+            return token;
+
 
         }
-        public static int FromHex(string value)
+        public static long FromHex(string value)
         {
             // strip the leading 0x
             if (value.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
             {
                 value = value.Substring(2);
             }
-            return Int32.Parse(value, NumberStyles.HexNumber);
+            return Int64.Parse(value, NumberStyles.HexNumber);
         }
         private byte[] StringToByteArray(string str)
         {

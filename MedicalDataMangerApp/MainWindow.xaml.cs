@@ -24,6 +24,7 @@ namespace MedicalDataMangerApp
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         private void Devices_Click(object sender, RoutedEventArgs e)
