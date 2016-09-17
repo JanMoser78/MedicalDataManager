@@ -71,16 +71,35 @@
       <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeviceViewModel.cs" />
+    <Compile Include="DosagePage.xaml.cs">
+      <DependentUpon>DosagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DosageViewModel.cs" />
+    <Compile Include="PersonPage.xaml.cs">
+      <DependentUpon>PersonPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="SubstancePage.xaml.cs">
+      <DependentUpon>SubstancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubstanceViewModel.cs" />
     <Compile Include="TokenPage.xaml.cs">
       <DependentUpon>TokenPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TokenPageViewModel.cs" />
+    <Compile Include="UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserViewModel.cs" />
     <Page Include="ActionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DevicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DosagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,7 +115,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PersonPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubstancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TokenPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

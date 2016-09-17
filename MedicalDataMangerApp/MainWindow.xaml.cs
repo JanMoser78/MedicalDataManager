@@ -34,5 +34,20 @@ namespace MedicalDataMangerApp
         {
             this.NavFrame.NavigationService.Navigate(new TokenPage());
         }
+
+        private void Persons_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new PersonPage());
+        }
+
+        private void Substances_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new SubstancePage());
+        }
+
+        private void Dosages_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new DosagePage());
+        }
     }
 }

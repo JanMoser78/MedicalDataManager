@@ -16,6 +16,5 @@ namespace MedicalDataManagerModel
     {
         public int Id { get; set; }
         public string SubstanceName { get; set; }
-        public Nullable<int> DosageId { get; set; }
     }
 }

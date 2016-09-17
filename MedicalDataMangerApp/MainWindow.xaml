@@ -11,9 +11,15 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="100">
                 <Button Margin="0 10 0 0" Content="MedicationPlans" />
-                <Button Margin="0 10 0 0" Content="Persons" />
-                <Button Margin="0 10 0 0" Content="Substances" />
-                <Button Margin="0 10 0 0" Content="Dosages" />
+                <Button Margin="0 10 0 0"
+                        Click="Persons_Click"
+                        Content="Persons" />
+                <Button Margin="0 10 0 0"
+                        Click="Substances_Click"
+                        Content="Substances" />
+                <Button Margin="0 10 0 0"
+                        Click="Dosages_Click"
+                        Content="Dosages" />
                 <Button Margin="0 10 0 0"
                         Click="Tokens_Click"
                         Content="Tokens" />
