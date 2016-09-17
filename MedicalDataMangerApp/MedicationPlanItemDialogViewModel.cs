@@ -24,7 +24,9 @@ namespace MedicalDataMangerApp
         {
             GetDevices();
             GetTokens();
-
+            GetDosages();
+            this.ValidFrom = DateTime.Now;
+            this.ValidTo = DateTime.Now.AddHours(1);
         }
  
 
@@ -55,10 +57,18 @@ namespace MedicalDataMangerApp
         public void SaveData()
         {
             MedicationPlan medPlan = new MedicationPlan();
-            medPlan.Token = SelectedToken;
+            medPlan.TokenId = SelectedToken.Id;
             medPlan.CompartmentNbr = Compartment;
             medPlan.Critical = Critical;
-            medPlan.Device = SelectedDevice;
+            medPlan.DeviceId = SelectedDevice.Id;
+            medPlan.DosageId = SelectedDosage.Id;
+            medPlan.ValidFrom = ValidFrom.ToString();
+            medPlan.Validto = ValidTo.ToString();
+            using (var context = new MedicalDataManagerDataBaseContainer())
+            {
+                context.MedicationPlans.Add(medPlan);
+                context.SaveChanges();
+            }
 
 
         }

@@ -20,6 +20,5 @@ namespace MedicalDataManagerModel
         public string PhoneNumber { get; set; }
     
         public virtual User User { get; set; }
-        public virtual Token Token { get; set; }
     }
 }

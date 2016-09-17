@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="eb458c41e568410f9505a9e76a58a079" Name="Diagram1" >
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Person" Width="1.5" PointX="7.875" PointY="2.75" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Person" Width="1.5" PointX="8.375" PointY="3.25" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Device" Width="1.5" PointX="2.5" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Token" Width="1.5" PointX="5.375" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.DeviceUsesToken" Width="2.375" PointX="2.375" PointY="2.75" />
@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.MedicationPlan" Width="1.5" PointX="18" PointY="3.25" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDevice" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDosage" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.TokenPerson" />
         <AssociationConnector Association="MedicalDataManagerDataBase.TokenDeviceUsesToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.TokenAction" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanToken" />

@@ -51,11 +51,9 @@ namespace MedicalDataManagerModel
         {
             using (var context = new MedicalDataManagerDataBaseContainer())
             {
-                Token newToken = new Token()
-                {
-                    Id = int.Parse(TokenId),
-                    Person = SelectedPerson
-                };
+                Token newToken = new Token();
+                newToken.Person_Id = SelectedPerson.Id;
+                newToken.Id = int.Parse(TokenId);
                 context.Tokens.Add(newToken);
                 context.SaveChanges()
                 ;

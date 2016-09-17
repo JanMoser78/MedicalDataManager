@@ -16,7 +16,7 @@ namespace MedicalDataManagerModel
     {
         public int Id { get; set; }
         public System.Guid DeviceId { get; set; }
-        public string Critical { get; set; }
+        public bool Critical { get; set; }
         public int DosageId { get; set; }
         public string ValidFrom { get; set; }
         public string Validto { get; set; }

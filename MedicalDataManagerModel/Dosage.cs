@@ -15,5 +15,6 @@ namespace MedicalDataManagerModel
     public partial class Dosage
     {
         public int Id { get; set; }
+        public string DosageName { get; set; }
     }
 }

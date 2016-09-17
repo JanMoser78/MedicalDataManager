@@ -2,13 +2,12 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/17/2016 05:12:32
+-- Date Created: 09/17/2016 11:47:48
 -- Generated from EDMX file: \\mac\home\documents\visual studio 2015\Projects\MedicalDataManager\MedicalDataManagerModel\MedicalDataManagerDataBase.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
-GO
-USE [MedicalDataManager];
+
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -23,14 +22,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ActionDevice]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Actions] DROP CONSTRAINT [FK_ActionDevice];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ActionToken]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Actions] DROP CONSTRAINT [FK_ActionToken];
-GO
 IF OBJECT_ID(N'[dbo].[FK_DeviceUsesTokenDevice]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DeviceUsesTokens] DROP CONSTRAINT [FK_DeviceUsesTokenDevice];
-GO
-IF OBJECT_ID(N'[dbo].[FK_DeviceUsesTokenToken]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DeviceUsesTokens] DROP CONSTRAINT [FK_DeviceUsesTokenToken];
 GO
 IF OBJECT_ID(N'[dbo].[FK_DosageContainsSubstancesDosage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DosageContainsSubstances] DROP CONSTRAINT [FK_DosageContainsSubstancesDosage];
@@ -47,8 +40,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_MedicationPlanToken]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MedicationPlans] DROP CONSTRAINT [FK_MedicationPlanToken];
 GO
-IF OBJECT_ID(N'[dbo].[FK_TokenPerson]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Tokens] DROP CONSTRAINT [FK_TokenPerson];
+IF OBJECT_ID(N'[dbo].[FK_TokenAction]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Actions] DROP CONSTRAINT [FK_TokenAction];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TokenDeviceUsesToken]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DeviceUsesTokens] DROP CONSTRAINT [FK_TokenDeviceUsesToken];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserPerson]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_UserPerson];
@@ -113,7 +109,7 @@ GO
 
 -- Creating table 'Tokens'
 CREATE TABLE [dbo].[Tokens] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [Id] int  NOT NULL,
     [Person_Id] int  NOT NULL
 );
 GO
@@ -163,7 +159,8 @@ GO
 
 -- Creating table 'Dosages'
 CREATE TABLE [dbo].[Dosages] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DosageName] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -179,7 +176,7 @@ GO
 CREATE TABLE [dbo].[MedicationPlans] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [DeviceId] uniqueidentifier  NOT NULL,
-    [Critical] nvarchar(max)  NOT NULL,
+    [Critical] bit  NOT NULL,
     [DosageId] int  NOT NULL,
     [ValidFrom] nvarchar(max)  NOT NULL,
     [Validto] nvarchar(max)  NOT NULL,
@@ -380,21 +377,6 @@ GO
 CREATE INDEX [IX_FK_MedicationPlanDosage]
 ON [dbo].[MedicationPlans]
     ([DosageId]);
-GO
-
--- Creating foreign key on [Person_Id] in table 'Tokens'
-ALTER TABLE [dbo].[Tokens]
-ADD CONSTRAINT [FK_TokenPerson]
-    FOREIGN KEY ([Person_Id])
-    REFERENCES [dbo].[People]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_TokenPerson'
-CREATE INDEX [IX_FK_TokenPerson]
-ON [dbo].[Tokens]
-    ([Person_Id]);
 GO
 
 -- Creating foreign key on [TokenId] in table 'DeviceUsesTokens'

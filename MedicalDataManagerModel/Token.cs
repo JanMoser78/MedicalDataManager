@@ -15,7 +15,6 @@ namespace MedicalDataManagerModel
     public partial class Token
     {
         public int Id { get; set; }
-    
-        public virtual Person Person { get; set; }
+        public int Person_Id { get; set; }
     }
 }
