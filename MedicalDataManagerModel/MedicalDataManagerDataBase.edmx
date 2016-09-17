@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ActionTypeId" Type="int" Nullable="false" />
-          <Property Name="DeviceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DeviceId" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="TimeStamp" Type="datetime" Nullable="false" />
           <Property Name="Payload" Type="nvarchar(max)" />
           <Property Name="TokenId" Type="int" Nullable="false" />
@@ -27,7 +27,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NbrOfCompartments" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DeviceUsesTokens">
@@ -36,7 +36,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ReadOnly" Type="bit" Nullable="false" />
-          <Property Name="DeviceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DeviceId" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="TokenId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DosageContainsSubstances">
@@ -59,7 +59,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DeviceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DeviceId" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Critical" Type="bit" Nullable="false" />
           <Property Name="DosageId" Type="int" Nullable="false" />
           <Property Name="ValidFrom" Type="datetime" Nullable="false" />
@@ -111,7 +111,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ActionDevice">
+        <Association Name="FK_DeviceAction">
           <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
           <End Role="Actions" Type="Self.Actions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -123,7 +123,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DeviceUsesTokenDevice">
+        <Association Name="FK_DeviceDeviceUsesToken">
           <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
           <End Role="DeviceUsesTokens" Type="Self.DeviceUsesTokens" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,11 +247,11 @@
             <End Role="ActionTypes" EntitySet="ActionTypes" />
             <End Role="Actions" EntitySet="Actions" />
           </AssociationSet>
-          <AssociationSet Name="FK_ActionDevice" Association="Self.FK_ActionDevice">
+          <AssociationSet Name="FK_DeviceAction" Association="Self.FK_DeviceAction">
             <End Role="Devices" EntitySet="Devices" />
             <End Role="Actions" EntitySet="Actions" />
           </AssociationSet>
-          <AssociationSet Name="FK_DeviceUsesTokenDevice" Association="Self.FK_DeviceUsesTokenDevice">
+          <AssociationSet Name="FK_DeviceDeviceUsesToken" Association="Self.FK_DeviceDeviceUsesToken">
             <End Role="Devices" EntitySet="Devices" />
             <End Role="DeviceUsesTokens" EntitySet="DeviceUsesTokens" />
           </AssociationSet>
@@ -308,14 +308,6 @@
             <End Role="Action" EntitySet="Actions" />
             <End Role="ActionType" EntitySet="ActionTypes" />
           </AssociationSet>
-          <AssociationSet Name="ActionDevice" Association="MedicalDataManagerDataBase.ActionDevice">
-            <End Role="Action" EntitySet="Actions" />
-            <End Role="Device" EntitySet="Devices" />
-          </AssociationSet>
-          <AssociationSet Name="DeviceUsesTokenDevice" Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice">
-            <End Role="DeviceUsesToken" EntitySet="DeviceUsesTokens" />
-            <End Role="Device" EntitySet="Devices" />
-          </AssociationSet>
           <EntitySet Name="Substances" EntityType="MedicalDataManagerDataBase.Substance" />
           <EntitySet Name="Dosages" EntityType="MedicalDataManagerDataBase.Dosage" />
           <EntitySet Name="DosageContainsSubstances" EntityType="MedicalDataManagerDataBase.DosageContainsSubstances" />
@@ -328,10 +320,6 @@
             <End Role="Substance" EntitySet="Substances" />
           </AssociationSet>
           <EntitySet Name="MedicationPlans" EntityType="MedicalDataManagerDataBase.MedicationPlan" />
-          <AssociationSet Name="MedicationPlanDevice" Association="MedicalDataManagerDataBase.MedicationPlanDevice">
-            <End Role="MedicationPlan" EntitySet="MedicationPlans" />
-            <End Role="Device" EntitySet="Devices" />
-          </AssociationSet>
           <AssociationSet Name="MedicationPlanDosage" Association="MedicalDataManagerDataBase.MedicationPlanDosage">
             <End Role="MedicationPlan" EntitySet="MedicationPlans" />
             <End Role="Dosage" EntitySet="Dosages" />
@@ -348,6 +336,18 @@
             <End Role="MedicationPlan" EntitySet="MedicationPlans" />
             <End Role="Token" EntitySet="Tokens" />
           </AssociationSet>
+          <AssociationSet Name="DeviceDeviceUsesToken" Association="MedicalDataManagerDataBase.DeviceDeviceUsesToken">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="DeviceUsesToken" EntitySet="DeviceUsesTokens" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceAction" Association="MedicalDataManagerDataBase.DeviceAction">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="Action" EntitySet="Actions" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceMedicationPlan" Association="MedicalDataManagerDataBase.DeviceMedicationPlan">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="MedicationPlan" EntitySet="MedicationPlans" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -363,7 +363,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="200" Unicode="false" FixedLength="false" />
           <Property Name="NbrOfCompartments" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Token">
@@ -379,10 +379,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ReadOnly" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.DeviceUsesTokenDevice" FromRole="DeviceUsesToken" ToRole="Device" />
-          <Property Name="DeviceId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.TokenDeviceUsesToken" FromRole="DeviceUsesToken" ToRole="Token" />
           <Property Name="TokenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.DeviceDeviceUsesToken" FromRole="DeviceUsesToken" ToRole="Device" />
+          <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -411,12 +411,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="ActionType" Relationship="MedicalDataManagerDataBase.ActionActionType" FromRole="Action" ToRole="ActionType" />
           <Property Name="ActionTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.ActionDevice" FromRole="Action" ToRole="Device" />
-          <Property Name="DeviceId" Type="Guid" Nullable="false" />
           <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Payload" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.TokenAction" FromRole="Action" ToRole="Token" />
           <Property Name="TokenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.DeviceAction" FromRole="Action" ToRole="Device" />
+          <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="ActionActionType">
           <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
@@ -427,30 +427,6 @@
             </Principal>
             <Dependent Role="Action">
               <PropertyRef Name="ActionTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ActionDevice">
-          <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
-          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Action">
-              <PropertyRef Name="DeviceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="DeviceUsesTokenDevice">
-          <End Type="MedicalDataManagerDataBase.DeviceUsesToken" Role="DeviceUsesToken" Multiplicity="*" />
-          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DeviceUsesToken">
-              <PropertyRef Name="DeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -507,29 +483,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.MedicationPlanDevice" FromRole="MedicationPlan" ToRole="Device" />
-          <Property Name="DeviceId" Type="Guid" Nullable="false" />
           <Property Name="Critical" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Dosage" Relationship="MedicalDataManagerDataBase.MedicationPlanDosage" FromRole="MedicationPlan" ToRole="Dosage" />
           <Property Name="DosageId" Type="Int32" Nullable="false" />
-          <Property Name="ValidFrom" Type="DateTime" Nullable="false" />
-          <Property Name="Validto" Type="DateTime" Nullable="false" />
+          <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Validto" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CompartmentNbr" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Token" Relationship="MedicalDataManagerDataBase.MedicationPlanToken" FromRole="MedicationPlan" ToRole="Token" />
           <Property Name="TokenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="MedicalDataManagerDataBase.DeviceMedicationPlan" FromRole="MedicationPlan" ToRole="Device" />
+          <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="MedicationPlanDevice">
-          <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
-          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MedicationPlan">
-              <PropertyRef Name="DeviceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="MedicationPlanDosage">
           <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
           <End Type="MedicalDataManagerDataBase.Dosage" Role="Dosage" Multiplicity="1" />
@@ -578,6 +542,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DeviceDeviceUsesToken">
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <End Type="MedicalDataManagerDataBase.DeviceUsesToken" Role="DeviceUsesToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeviceUsesToken">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeviceAction">
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <End Type="MedicalDataManagerDataBase.Action" Role="Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeviceMedicationPlan">
+          <End Type="MedicalDataManagerDataBase.Device" Role="Device" Multiplicity="1" />
+          <End Type="MedicalDataManagerDataBase.MedicationPlan" Role="MedicationPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicationPlan">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -613,9 +613,9 @@
     <EntitySetMapping Name="DeviceUsesTokens">
       <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.DeviceUsesToken)">
         <MappingFragment StoreEntitySet="DeviceUsesTokens">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ReadOnly" ColumnName="ReadOnly" />
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReadOnly" ColumnName="ReadOnly" />
           <ScalarProperty Name="TokenId" ColumnName="TokenId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -640,9 +640,9 @@
     <EntitySetMapping Name="Actions">
       <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.Action)">
         <MappingFragment StoreEntitySet="Actions">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ActionTypeId" ColumnName="ActionTypeId" />
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActionTypeId" ColumnName="ActionTypeId" />
           <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
           <ScalarProperty Name="Payload" ColumnName="Payload" />
           <ScalarProperty Name="TokenId" ColumnName="TokenId" />
@@ -677,8 +677,8 @@
     <EntitySetMapping Name="MedicationPlans">
       <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.MedicationPlan)">
         <MappingFragment StoreEntitySet="MedicationPlans">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Critical" ColumnName="Critical" />
           <ScalarProperty Name="DosageId" ColumnName="DosageId" />
           <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />

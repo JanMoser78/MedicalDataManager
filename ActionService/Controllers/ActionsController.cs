@@ -22,7 +22,7 @@ namespace ActionService.Controllers
             return string.Format("{0} - {1}",deviceId,tokenId);
         }
         [HttpGet]
-        public string OnActionReceive(int actionId, string payload, DateTime timeStamp, Guid devGuid)
+        public string OnActionReceive(int actionId, string payload, DateTime timeStamp, string devGuid)
         {
             var provider = new MedicalDataManagerModelProvider();
             provider.SaveAction(actionId, payload);
@@ -30,7 +30,7 @@ namespace ActionService.Controllers
         }
 
         [HttpGet]
-        public string OnRequestCompartmentMedPlan(Guid deviceId, int compartmentId)
+        public string OnRequestCompartmentMedPlan(string deviceId, int compartmentId)
         {
             var provider = new MedicalDataManagerModelProvider();
             return provider.ReturnMedPlan(deviceId, compartmentId);

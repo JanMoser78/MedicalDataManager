@@ -24,8 +24,6 @@ namespace MedicalDataMangerApp
         public MainWindow()
         {
             InitializeComponent();
-            MedicalDataManagerModelProvider prov = new MedicalDataManagerModelProvider();
-            prov.SaveAction(0,"vv");
         }
 
         private void Devices_Click(object sender, RoutedEventArgs e)

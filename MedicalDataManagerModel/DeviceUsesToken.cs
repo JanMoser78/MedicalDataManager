@@ -16,10 +16,10 @@ namespace MedicalDataManagerModel
     {
         public int Id { get; set; }
         public bool ReadOnly { get; set; }
-        public System.Guid DeviceId { get; set; }
         public int TokenId { get; set; }
+        public string DeviceId { get; set; }
     
-        public virtual Device Device { get; set; }
         public virtual Token Token { get; set; }
+        public virtual Device Device { get; set; }
     }
 }

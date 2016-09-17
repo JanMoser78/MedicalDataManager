@@ -21,12 +21,12 @@ namespace MedicalDataManagerModel
 
         }
 
-        public string ReturnMedPlan(Guid DeviceID, int compartmentId)
+        public string ReturnMedPlan(string DeviceID, int compartmentId)
         {
-            return EncodePayLoad(Guid.Parse("83efe329-238b-4e9e-aa96-1f37e7c176ac"), 2);
+            return EncodePayLoad(DeviceID, compartmentId);
         }
 
-        private string EncodePayLoad(Guid deviceId, int compartmentId)
+        private string EncodePayLoad(string deviceId, int compartmentId)
         {
             using (var context = new MedicalDataManagerDataBaseContainer())
             {

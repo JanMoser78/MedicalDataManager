@@ -15,16 +15,16 @@ namespace MedicalDataManagerModel
     public partial class MedicationPlan
     {
         public int Id { get; set; }
-        public System.Guid DeviceId { get; set; }
         public bool Critical { get; set; }
         public int DosageId { get; set; }
-        public string ValidFrom { get; set; }
-        public string Validto { get; set; }
+        public System.DateTime ValidFrom { get; set; }
+        public System.DateTime Validto { get; set; }
         public int CompartmentNbr { get; set; }
         public int TokenId { get; set; }
+        public string DeviceId { get; set; }
     
-        public virtual Device Device { get; set; }
         public virtual Dosage Dosage { get; set; }
         public virtual Token Token { get; set; }
+        public virtual Device Device { get; set; }
     }
 }

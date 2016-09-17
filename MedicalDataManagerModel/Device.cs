@@ -14,6 +14,7 @@ namespace MedicalDataManagerModel
     
     public partial class Device
     {
-        public System.Guid Id { get; set; }
+        public string Id { get; set; }
+        public int NbrOfCompartments { get; set; }
     }
 }

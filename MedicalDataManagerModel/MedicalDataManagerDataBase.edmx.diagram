@@ -4,29 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eb458c41e568410f9505a9e76a58a079" Name="Diagram1" >
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Person" Width="1.5" PointX="8.375" PointY="3.25" />
+      <Diagram DiagramId="eb458c41e568410f9505a9e76a58a079" Name="Diagram1" ZoomLevel="72" >
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.Person" Width="1.5" PointX="7.875" PointY="3.5" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Device" Width="1.5" PointX="2.5" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Token" Width="1.5" PointX="5.375" PointY="0.5" />
-        <EntityTypeShape EntityType="MedicalDataManagerDataBase.DeviceUsesToken" Width="2.375" PointX="2.375" PointY="2.75" />
+        <EntityTypeShape EntityType="MedicalDataManagerDataBase.DeviceUsesToken" Width="2.375" PointX="1.625" PointY="3.375" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.User" Width="1.5" PointX="5.125" PointY="3" />
         <AssociationConnector Association="MedicalDataManagerDataBase.UserPerson" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.ActionType" Width="1.5" PointX="12.125" PointY="0.625" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Action" Width="1.5" PointX="9.75" PointY="0.625" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionActionType" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.ActionDevice" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Substance" Width="1.5" PointX="11.625" PointY="2.125" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Dosage" Width="1.5" PointX="16" PointY="2.125" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.DosageContainsSubstances" Width="1.5" PointX="13.75" PointY="3.5" />
         <AssociationConnector Association="MedicalDataManagerDataBase.DosageContainsSubstancesDosage" />
         <AssociationConnector Association="MedicalDataManagerDataBase.DosageContainsSubstancesSubstance" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.MedicationPlan" Width="1.5" PointX="18" PointY="3.25" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDevice" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDosage" />
         <AssociationConnector Association="MedicalDataManagerDataBase.TokenDeviceUsesToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.TokenAction" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanToken" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceDeviceUsesToken" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceAction" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceMedicationPlan" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -25,11 +26,19 @@
                  Height="30"
                  VerticalAlignment="Top"
                  Text="{Binding DeviceId}" />
-        <Button Grid.Row="1"
+        <Label Grid.Row="1"
+               Grid.Column="0"
+               Content="Number of Compartments:" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="1"
+                 Height="30"
+                 VerticalAlignment="Top"
+                 Text="{Binding CompartmentNbr}" />
+        <Button Grid.Row="2"
                 Grid.Column="0"
                 Click="ButtonSave"
                 Content="Save" />
-        <Button Grid.Row="1"
+        <Button Grid.Row="2"
                 Grid.Column="1"
                 Click="ButtonCancel"
                 Content="Cancel" />

@@ -8,15 +8,26 @@ namespace MedicalDataMangerApp
 {
     public class DeviceEditViewModel : INotifyPropertyChanged
     {
-        private Guid _deviceID;
+        private string _deviceID;
+        private int _nbrCompartment;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Guid DeviceId
+        public string DeviceId
         {
             get { return _deviceID; }
             set
             {
                 _deviceID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int CompartmentNbr
+        {
+            get { return _nbrCompartment; }
+            set
+            {
+                _nbrCompartment = value;
                 OnPropertyChanged();
             }
         }
@@ -34,6 +45,7 @@ namespace MedicalDataMangerApp
             {
                 Device actDevice = new Device();
                 actDevice.Id = this.DeviceId;
+                actDevice.NbrOfCompartments = this.CompartmentNbr;
                 context.Devices.Add(actDevice);
                 context.SaveChanges();
             }
