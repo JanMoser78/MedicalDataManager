@@ -14,6 +14,9 @@ namespace MedicalDataMangerApp
         private DateTime _validTo;
         private bool _critical;
         private int _compartment;
+        private Token _selectedToken    ;
+        private Device _selectedDevice;
+        private Dosage _selectedDosage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,6 +26,7 @@ namespace MedicalDataMangerApp
             GetTokens();
 
         }
+ 
 
         private void GetDevices()
         {
@@ -40,8 +44,28 @@ namespace MedicalDataMangerApp
             }
         }
 
+        private void GetDosages()
+        {
+            using (var context = new MedicalDataManagerDataBaseContainer())
+            {
+                this.Dosages = new ObservableCollection<Dosage>(context.Dosages.ToList());
+            }
+        }
+
+        public void SaveData()
+        {
+            MedicationPlan medPlan = new MedicationPlan();
+            medPlan.Token = SelectedToken;
+            medPlan.CompartmentNbr = Compartment;
+            medPlan.Critical = Critical;
+            medPlan.Device = SelectedDevice;
+
+
+        }
         public ObservableCollection<Device> Devices { get; private set; }
         public ObservableCollection<Token> Tokens { get; private set; }
+
+        public ObservableCollection<Dosage> Dosages { get; private set; }
 
         public DateTime ValidFrom
         {
@@ -78,6 +102,36 @@ namespace MedicalDataMangerApp
             set
             {
                 _compartment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Token SelectedToken
+        {
+            get { return _selectedToken; }
+            set
+            {
+                _selectedToken = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Dosage SelectedDosage
+        {
+            get { return _selectedDosage; }
+            set
+            {
+                _selectedDosage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Device SelectedDevice
+        {
+            get { return _selectedDevice; }
+            set
+            {
+                _selectedDevice = value;
                 OnPropertyChanged();
             }
         }

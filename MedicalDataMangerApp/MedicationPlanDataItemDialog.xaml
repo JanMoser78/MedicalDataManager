@@ -21,6 +21,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Grid.Column="0"
@@ -30,7 +31,8 @@
                   Grid.Column="1"
                   Height="30"
                   DisplayMemberPath="Id"
-                  ItemsSource="{Binding Devices}" />
+                  ItemsSource="{Binding Devices}"
+                  SelectedItem="{Binding SelectedDevice}" />
         <Label Grid.Row="1"
                Grid.Column="0"
                Content="Token Id:" />
@@ -38,34 +40,51 @@
                   Grid.Column="1"
                   Height="30"
                   DisplayMemberPath="Id"
-                  ItemsSource="{Binding Tokens}" />
+                  ItemsSource="{Binding Tokens}"
+                  SelectedItem="{Binding SelectedToken}" />
         <Label Grid.Row="2"
                Grid.Column="0"
                Content="Valid from:" />
         <DatePickerTextBox Grid.Row="2"
                            Grid.Column="1"
-                           Height="30" />
+                           Height="30"
+                           Text="{Binding ValidFrom}" />
         <Label Grid.Row="3"
                Grid.Column="0"
                Content="Valid to:" />
         <DatePickerTextBox Grid.Row="3"
                            Grid.Column="1"
-                           Height="30" />
+                           Height="30"
+                           Text="{Binding ValidTo}" />
         <Label Grid.Row="4"
                Grid.Column="0"
                Content="Critical:" />
-        <CheckBox Grid.Row="4" Grid.Column="1" />
+        <CheckBox Grid.Row="4"
+                  Grid.Column="1"
+                  IsChecked="{Binding Critical}" />
         <Label Grid.Row="5"
                Grid.Column="0"
                Content="Compartment:" />
         <TextBox Grid.Row="5"
                  Grid.Column="1"
                  Height="30"
-                 MaxLength="2" />
-        <Button Grid.Row="6"
+                 MaxLength="2"
+                 Text="{Binding Compartment}" />
+
+        <Label Grid.Row="6"
+               Grid.Column="0"
+               Content="Dosage Id:" />
+        <ComboBox Grid.Row="6"
+                  Grid.Column="1"
+                  Height="30"
+                  DisplayMemberPath="Id"
+                  ItemsSource="{Binding Dosages}"
+                  SelectedItem="{Binding SelectedDosage}" />
+        <Button Grid.Row="7"
                 Grid.Column="0"
+                Click="SaveClick"
                 Content="Save" />
-        <Button Grid.Row="6"
+        <Button Grid.Row="7"
                 Grid.Column="1"
                 Click="CancelClick"
                 Content="Cancel" />

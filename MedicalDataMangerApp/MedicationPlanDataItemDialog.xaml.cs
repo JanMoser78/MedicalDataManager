@@ -32,5 +32,10 @@ namespace MedicalDataMangerApp
         {
             this.Close();
         }
+
+        private void SaveClick(object sender, RoutedEventArgs e)
+        {
+            _viewmodel.SaveData();
+        }
     }
 }
