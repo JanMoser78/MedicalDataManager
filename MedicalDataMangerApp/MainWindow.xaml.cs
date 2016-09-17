@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MedicalDataManagerModel;
 
 namespace MedicalDataMangerApp
 {
@@ -23,6 +24,8 @@ namespace MedicalDataMangerApp
         public MainWindow()
         {
             InitializeComponent();
+            MedicalDataManagerModelProvider prov = new MedicalDataManagerModelProvider();
+            prov.SaveAction(0,"vv");
         }
 
         private void Devices_Click(object sender, RoutedEventArgs e)

@@ -62,8 +62,8 @@ namespace MedicalDataMangerApp
             medPlan.Critical = Critical;
             medPlan.DeviceId = SelectedDevice.Id;
             medPlan.DosageId = SelectedDosage.Id;
-            medPlan.ValidFrom = ValidFrom.ToString();
-            medPlan.Validto = ValidTo.ToString();
+            medPlan.ValidFrom = ValidFrom;
+            medPlan.Validto = ValidTo;
             using (var context = new MedicalDataManagerDataBaseContainer())
             {
                 context.MedicationPlans.Add(medPlan);

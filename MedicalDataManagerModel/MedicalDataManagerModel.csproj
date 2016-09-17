@@ -84,6 +84,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MedicalDataManagerDataBase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MedicalDataManagerModelProvider.cs" />
     <Compile Include="MedicationPlan.cs">
       <DependentUpon>MedicalDataManagerDataBase.tt</DependentUpon>
     </Compile>

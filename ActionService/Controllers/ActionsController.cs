@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using MedicalDataManagerModel;
 
 namespace ActionService.Controllers
 {
@@ -21,9 +22,18 @@ namespace ActionService.Controllers
             return string.Format("{0} - {1}",deviceId,tokenId);
         }
         [HttpGet]
-        public string OnActionReceive(int actionId, string payload)
+        public string OnActionReceive(int actionId, string payload, DateTime timeStamp, Guid devGuid)
         {
+            var provider = new MedicalDataManagerModelProvider();
+            provider.SaveAction(actionId, payload);
             return "Hello World";
+        }
+
+        [HttpGet]
+        public string OnRequestCompartmentMedPlan(Guid deviceId, int compartmentId)
+        {
+            var provider = new MedicalDataManagerModelProvider();
+            return provider.ReturnMedPlan(deviceId, compartmentId);
         }
 
         // POST: api/Actions
