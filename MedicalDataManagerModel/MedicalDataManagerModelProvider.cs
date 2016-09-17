@@ -15,9 +15,21 @@ namespace MedicalDataManagerModel
     }
     public class MedicalDataManagerModelProvider
     {
-        public void SaveAction(int actionid, string payload)
+        public void SaveAction(int actionid, string payload, DateTime timeStamp, string devUid)
         {
             DecryptPayload(payload);
+            using (var context = new MedicalDataManagerDataBaseContainer())
+            {
+                Action act = new Action();
+                act.ActionTypeId = actionid;
+                act.DeviceId = devUid;
+                act.Payload = payload;
+                act.TimeStamp = timeStamp;
+                act.TokenId = 666;
+                context.Actions.Add(act);
+                context.SaveChanges();
+            }
+
 
         }
 
