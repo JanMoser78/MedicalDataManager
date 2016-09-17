@@ -10,7 +10,9 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="100">
-                <Button Margin="0 10 0 0" Content="MedicationPlans" />
+                <Button Margin="0 10 0 0"
+                        Click="MedPlan_Click"
+                        Content="MedicationPlans" />
                 <Button Margin="0 10 0 0"
                         Click="Persons_Click"
                         Content="Persons" />

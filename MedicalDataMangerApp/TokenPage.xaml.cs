@@ -31,7 +31,12 @@ namespace MedicalDataMangerApp
 
 }
 
-}
+        private void EditDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = new TokenEditDialog();
+            dialog.ShowDialog();
+        }
+    }
 }
 
 

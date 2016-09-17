@@ -11,7 +11,9 @@
 
     <Grid>
         <StackPanel>
-            <Button Margin="0 10 0 0" Content="Add" />
+            <Button Margin="0 10 0 0"
+                    Click="EditDialog"
+                    Content="Add" />
             <DataGrid x:Name="TokenGrid" ItemsSource="{Binding Tokens}" />
         </StackPanel>
     </Grid>

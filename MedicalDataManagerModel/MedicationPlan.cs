@@ -16,14 +16,15 @@ namespace MedicalDataManagerModel
     {
         public int Id { get; set; }
         public System.Guid DeviceId { get; set; }
-        public System.Guid TokenId { get; set; }
         public string Critical { get; set; }
         public int DosageId { get; set; }
         public string ValidFrom { get; set; }
         public string Validto { get; set; }
+        public int CompartmentNbr { get; set; }
+        public int TokenId { get; set; }
     
         public virtual Device Device { get; set; }
-        public virtual Token Token { get; set; }
         public virtual Dosage Dosage { get; set; }
+        public virtual Token Token { get; set; }
     }
 }

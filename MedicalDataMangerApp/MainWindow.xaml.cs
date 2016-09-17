@@ -49,5 +49,10 @@ namespace MedicalDataMangerApp
         {
             this.NavFrame.NavigationService.Navigate(new DosagePage());
         }
+
+        private void MedPlan_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new MedicationPlanPage());
+        }
     }
 }

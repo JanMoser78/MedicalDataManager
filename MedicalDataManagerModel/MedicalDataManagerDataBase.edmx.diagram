@@ -13,12 +13,9 @@
         <AssociationConnector Association="MedicalDataManagerDataBase.UserPerson" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.ActionType" Width="1.5" PointX="12.125" PointY="0.625" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Action" Width="1.5" PointX="9.75" PointY="0.625" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.ActionToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionActionType" />
         <AssociationConnector Association="MedicalDataManagerDataBase.ActionDevice" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.DeviceUsesTokenDevice" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.TokenPerson" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Substance" Width="1.5" PointX="11.625" PointY="2.125" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.Dosage" Width="1.5" PointX="16" PointY="2.125" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.DosageContainsSubstances" Width="1.5" PointX="13.75" PointY="3.5" />
@@ -26,8 +23,11 @@
         <AssociationConnector Association="MedicalDataManagerDataBase.DosageContainsSubstancesSubstance" />
         <EntityTypeShape EntityType="MedicalDataManagerDataBase.MedicationPlan" Width="1.5" PointX="18" PointY="3.25" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDevice" />
-        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanToken" />
         <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanDosage" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.TokenPerson" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.TokenDeviceUsesToken" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.TokenAction" />
+        <AssociationConnector Association="MedicalDataManagerDataBase.MedicationPlanToken" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

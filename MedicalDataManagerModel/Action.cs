@@ -15,14 +15,14 @@ namespace MedicalDataManagerModel
     public partial class Action
     {
         public int Id { get; set; }
-        public System.Guid TokenId { get; set; }
         public int ActionTypeId { get; set; }
         public System.Guid DeviceId { get; set; }
         public System.DateTime TimeStamp { get; set; }
         public string Payload { get; set; }
+        public int TokenId { get; set; }
     
-        public virtual Token Token { get; set; }
         public virtual ActionType ActionType { get; set; }
         public virtual Device Device { get; set; }
+        public virtual Token Token { get; set; }
     }
 }

@@ -67,6 +67,7 @@
     <Compile Include="ActionPage.xaml.cs">
       <DependentUpon>ActionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeviceEditViewModel.cs" />
     <Compile Include="DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
@@ -75,6 +76,9 @@
       <DependentUpon>DosagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DosageViewModel.cs" />
+    <Compile Include="EditDeviceDialog.xaml.cs">
+      <DependentUpon>EditDeviceDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MedicationPlanPage.xaml.cs">
       <DependentUpon>MedicationPlanPage.xaml</DependentUpon>
     </Compile>
@@ -87,6 +91,9 @@
       <DependentUpon>SubstancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubstanceViewModel.cs" />
+    <Compile Include="TokenEditDialog.xaml.cs">
+      <DependentUpon>TokenEditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TokenPage.xaml.cs">
       <DependentUpon>TokenPage.xaml</DependentUpon>
     </Compile>
@@ -104,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DosagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditDeviceDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubstancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TokenEditDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
