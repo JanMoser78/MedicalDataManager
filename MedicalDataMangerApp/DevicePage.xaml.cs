@@ -23,6 +23,7 @@ namespace MedicalDataMangerApp
         public DevicePage()
         {
             InitializeComponent();
+            this.DataContext = new DeviceViewModel();
         }
     }
 }

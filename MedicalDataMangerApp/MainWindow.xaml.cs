@@ -24,5 +24,15 @@ namespace MedicalDataMangerApp
         {
             InitializeComponent();
         }
+
+        private void Devices_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new DevicePage());
+        }
+
+        private void Tokens_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavFrame.NavigationService.Navigate(new TokenPage());
+        }
     }
 }
