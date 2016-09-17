@@ -11,7 +11,9 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch">
-            <Button Margin="0 10 0 0 " Content="Add" />
+            <Button Margin="0 10 0 0 "
+                    Click="ButtonAdd"
+                    Content="Add" />
             <DataGrid x:Name="DevicesGrid" ItemsSource="{Binding Devices}" />
         </StackPanel>
     </Grid>

@@ -11,7 +11,7 @@
 
     <Grid>
         <StackPanel>
-            <Button Margin=" 0 10 0 0" Content="Add" />
+            <Button Margin=" 0 10 0 0" Content="Add"  Click="AddMedPlanItem"/>
             <DataGrid ItemsSource="{Binding MedicationPlans}" />
         </StackPanel>
     </Grid>

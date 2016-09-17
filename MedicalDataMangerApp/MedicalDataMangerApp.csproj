@@ -79,6 +79,14 @@
     <Compile Include="EditDeviceDialog.xaml.cs">
       <DependentUpon>EditDeviceDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MedicationPlanDataItemDialog.xaml.cs">
+      <DependentUpon>MedicationPlanDataItemDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MedicationPlanEdit.xaml.cs">
+      <DependentUpon>MedicationPlanEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MedicationPlanEditViewModel.cs" />
+    <Compile Include="MedicationPlanItemDialogViewModel.cs" />
     <Compile Include="MedicationPlanPage.xaml.cs">
       <DependentUpon>MedicationPlanPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +138,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MedicationPlanDataItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MedicationPlanEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MedicationPlanPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

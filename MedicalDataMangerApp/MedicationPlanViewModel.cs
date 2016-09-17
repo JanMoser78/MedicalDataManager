@@ -19,10 +19,8 @@ namespace MedicalDataMangerApp
 
        public MedicationPlanViewModel()
        {
-           using (var context = new MedicalDataManagerDataBaseContainer())
-           {
-               this.MedicationPlans = new ObservableCollection<MedicationPlan>(context.MedicationPlans.ToList());
-           }
+           this.MedicationPlans = new ObservableCollection<MedicationPlan>();
+          Refresh();
        }
 
        [NotifyPropertyChangedInvocator]
@@ -30,5 +28,15 @@ namespace MedicalDataMangerApp
        {
            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
        }
+
+       public void Refresh()
+       {
+           this.MedicationPlans.Clear();
+            using (var context = new MedicalDataManagerDataBaseContainer())
+            {
+                this.MedicationPlans = new ObservableCollection<MedicationPlan>(context.MedicationPlans.ToList());
+            }
+
+        }
     }
 }

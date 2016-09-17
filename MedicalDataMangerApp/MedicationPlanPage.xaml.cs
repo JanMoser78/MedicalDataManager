@@ -20,10 +20,21 @@ namespace MedicalDataMangerApp
     /// </summary>
     public partial class MedicationPlanPage : Page
     {
+        private MedicationPlanViewModel _viewModel;
+
         public MedicationPlanPage()
         {
             InitializeComponent();
-            this.DataContext = new MedicationPlanViewModel();
+            _viewModel = new MedicationPlanViewModel();
+            this.DataContext = _viewModel;
+        }
+
+        private void AddMedPlanItem(object sender, RoutedEventArgs e)
+        {
+            var medplanItemDialog = new MedicationPlanDataItemDialog();
+            medplanItemDialog.ShowDialog();
+            _viewModel.Refresh();
+
         }
     }
 }

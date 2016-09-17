@@ -10,30 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MedicalDataMangerApp
 {
     /// <summary>
-    /// Interaction logic for DevicePage.xaml
+    /// Interaction logic for MedicationPlanEdit.xaml
     /// </summary>
-    public partial class DevicePage : Page
+    public partial class MedicationPlanEdit : Window
     {
-        private DeviceViewModel _viewModel;
-
-        public DevicePage()
+        private MedicationPlanEditViewModel _viewModel = new MedicationPlanEditViewModel();
+        public MedicationPlanEdit()
         {
             InitializeComponent();
-            _viewModel = new DeviceViewModel();
             this.DataContext = _viewModel;
         }
 
-        private void ButtonAdd(object sender, RoutedEventArgs e)
+        private void AddItem(object sender, RoutedEventArgs e)
         {
-            var editWindow = new EditDeviceDialog();
-            editWindow.ShowDialog();
-
+            var editView = new MedicationPlanDataItemDialog();
+            editView.ShowDialog();
+            _viewModel.Refresh();
         }
     }
 }
