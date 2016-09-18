@@ -14,6 +14,7 @@ namespace MedicalDataManagerModel
         Urgent = 1,
 
     }
+
     public class MedicalDataManagerModelProvider
     {
         public void SaveAction(int actionid, string payload, DateTime timeStamp, string devUid)
@@ -33,6 +34,24 @@ namespace MedicalDataManagerModel
 
 
         }
+
+        public string ReturnAlarmdata(string payLoad)
+        {
+            int token = DecryptPayload(payLoad);
+            using (var context = new MedicalDataManagerDataBaseContainer())
+            {
+                var personId = context.Tokens.Where(x => x.Id == token).FirstOrDefault();
+                var pers = context.People.FirstOrDefault(x => x.Id == personId.Person_Id);
+                return
+                    string.Format("{0}, {1}, {2}, {3}, {4}", pers.Lastname, pers.Firstname, pers.PhoneNumber, pers.Email,
+                        pers.Twitter);
+
+            }
+        }
+
+
+
+
 
         public string ReturnMedPlan(string DeviceID, int compartmentId)
         {
@@ -54,8 +73,8 @@ namespace MedicalDataManagerModel
                         
                             short token = (short) medicationPlan.TokenId;
                             byte dosage = (byte) medicationPlan.DosageId;
-                            long from = medicationPlan.ValidFrom.Ticks;
-                            long to = medicationPlan.Validto.Ticks;
+                        long from = UnixTimestampFromDateTime(medicationPlan.ValidFrom);
+                            long to = UnixTimestampFromDateTime(medicationPlan.Validto);
                             byte compartment = (byte) medicationPlan.CompartmentNbr;
                             byte critical = (byte) (medicationPlan.Critical ? 1 : 0);
                            
@@ -76,6 +95,14 @@ namespace MedicalDataManagerModel
             }
             return  "00FFFF";
         }
+
+        public static long UnixTimestampFromDateTime(DateTime date)
+        {
+            long unixTimestamp = date.Ticks - new DateTime(1970, 1, 1).Ticks;
+            unixTimestamp /= TimeSpan.TicksPerSecond;
+            return unixTimestamp*1000;
+        }
+
         public int DecryptPayload(string payload)
         {
             int token = 0;

@@ -75,6 +75,8 @@
           <Property Name="Firstname" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Lastname" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Twitter" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Substances">
           <Key>
@@ -358,6 +360,8 @@
           <Property Name="Lastname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="MedicalDataManagerDataBase.UserPerson" FromRole="Person" ToRole="User" />
+          <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Device">
           <Key>
@@ -587,7 +591,9 @@
     <EntitySetMapping Name="People">
       <EntityTypeMapping TypeName="IsTypeOf(MedicalDataManagerDataBase.Person)">
         <MappingFragment StoreEntitySet="People">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Firstname" ColumnName="Firstname" />
           <ScalarProperty Name="Lastname" ColumnName="Lastname" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />

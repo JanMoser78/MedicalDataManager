@@ -25,8 +25,15 @@ namespace ActionService.Controllers
         public string OnActionReceive(int actionId, string payload, DateTime timeStamp, string devGuid)
         {
             var provider = new MedicalDataManagerModelProvider();
-            provider.SaveAction(actionId, payload);
+            provider.SaveAction(actionId, payload, timeStamp, devGuid);
             return "Hello World";
+        }
+
+        [HttpGet]
+        public string OnAlarmReceived(string payLoad)
+        {
+            var provider = new MedicalDataManagerModelProvider();
+            return provider.ReturnAlarmdata(payLoad);
         }
 
         [HttpGet]
