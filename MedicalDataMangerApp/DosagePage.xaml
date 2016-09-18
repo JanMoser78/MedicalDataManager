@@ -8,11 +8,46 @@
       d:DesignHeight="300"
       d:DesignWidth="300"
       mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  IG Theme  -->
+                <!--<ResourceDictionary Source="Themes/IG/IG.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="Themes/IG/IG.MSControls.Toolkit.Implicit.xaml" />-->
 
+                <!--  Metro Theme  -->
+                <!--<ResourceDictionary Source="Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />-->
+
+                <!--  MetroDark Theme  -->
+                <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Toolkit.Implicit.xaml" />
+
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- <SolidColorBrush x:Key="BackgroundKey" Color="#FFFFFF" />-->
+
+            <!--  Dark Theme  -->
+            <SolidColorBrush x:Key="BackgroundKey" Color="#FF181818" />
+
+            <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="Foreground" Value="#FF00AADE" />
+            </Style>
+
+            <Style x:Key="SubHeaderTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="Foreground" Value="#FF00AADE" />
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <StackPanel>
             <Button Margin=" 0 10 0 0" Content="Add" />
-            <DataGrid ItemsSource="{Binding Dosages}" />
+            <DataGrid ItemsSource="{Binding Dosages}" Style="{StaticResource DataGridStyle}" />
         </StackPanel>
     </Grid>
 </Page>

@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalDataMangerApp", "Med
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionService", "ActionService\ActionService.csproj", "{910FD6A9-13DC-47EF-AAD8-90F2789171F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{49C00EDA-9DF7-4F31-8108-CAFAF4C0260C}"
+	ProjectSection(SolutionItems) = preProject
+		Praesi\HackZurichPres.pptx = Praesi\HackZurichPres.pptx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
