@@ -382,6 +382,8 @@ void sendPacket(uint8_t* packet, uint8_t l){
     }
 }
 
+int flag = 0;
+
 void loop() {
 
   /*Paket to_send;
@@ -395,7 +397,7 @@ void loop() {
 
   //check for alarm every half an hour
   unsigned long long t = millis()+millis_offset;
-  if (1 || millis_last_alarm <= t-1800000LL){
+  /*if (1 || millis_last_alarm <= t-1800000LL){
     millis_last_alarm = t;
     if (1 || compartment_database[active_compartment].time_to < t && compartment_database[active_compartment].full == true){
       Paket send_alarm;
@@ -406,25 +408,33 @@ void loop() {
       sendPacket((uint8_t*)&send_alarm,sizeof(send_alarm));
       debugSerial.println("alarm pakage sent");
     }
-  }
+  }*/
   
-  char ESP_buffer[12];
+  char ESP_buffer[50];
   //chargeing stage
   int i = 6;
   
   if (ESPSerial.available()) {
       bool end_of_buf = false;
       bool begin_found = false;
+      //debugSerial.print("Data deleted : ");
       while(ESPSerial.available() && !begin_found)
-        begin_found = (ESPSerial.read() == '$');
+      {
+        char value = ESPSerial.read();
+        begin_found = ( value == '$');
+        //debugSerial.print(value);
+      }
+      //debugSerial.println("   END");
       if(begin_found)
       {
-        ESPSerial.readBytesUntil('*', ESP_buffer, 10);
+        int lecture = ESPSerial.readBytesUntil('*', ESP_buffer, 50);
+        ESP_buffer[lecture] = '\0';
+        debugSerial.println(ESP_buffer);
         unsigned int token;
         if (1 == sscanf(ESP_buffer, "AUTH,%u", &token)){
             if ( token == PATIENT_TOKEN ){
                 debugSerial.println("Patient");
-                if ( active_compartment < 8 && t > compartment_database[active_compartment].time_from){
+                if ( active_compartment < 2 && t > compartment_database[active_compartment].time_from){
                   ESPSerial.print(active_compartment);
                   debugSerial.println("command open compartment sent");
                   //send dispense
@@ -450,6 +460,35 @@ void loop() {
                   }
                   
                 }
+                // trigger alarm for demo
+                else if( active_compartment = 2){
+                  if (flag=0){
+                    delay(18000);
+                    Paket send_alarm;
+                    send_alarm.action_id = Alarm;
+                    send_alarm.access_token = compartment_database[active_compartment].token;
+                    send_alarm.compartment = active_compartment;
+                    flipbytes((char*)&send_alarm);
+                    sendPacket((uint8_t*)&send_alarm,sizeof(send_alarm));
+                    debugSerial.println("alarm pakage sent");
+                    flag = 1;
+                    }
+                   else{
+                     ESPSerial.print(active_compartment);
+                    debugSerial.println("command open compartment sent");
+                    //send dispense
+                    Paket send_dispense;
+                    send_dispense.action_id = Dispense;
+                    send_dispense.access_token = token;
+                    send_dispense.compartment = active_compartment;
+                    send_dispense.t = t;
+  
+                    flipbytes((char*)&send_dispense);
+                    sendPacket((uint8_t*)&send_dispense,sizeof(send_dispense));
+                   }
+                   
+                  
+                }
                 else{
                   debugSerial.println("all compartments empty or not in time frame");
                 }
@@ -466,9 +505,12 @@ void loop() {
                         sendPacket((uint8_t*)&comp_request,sizeof(comp_request));
                         debugSerial.println("compartment data request sent");
                         counter = 0;
+
+                        ESPSerial.print(active_compartment);
                         
                         init_LoRa_buffer();
-                        do{
+                        LoRaBee.receive(LoRa_buffer, 18, 0);
+                        /*do{
                           while (!LoRaBee.receive(LoRa_buffer, 18, 0)){
                               delay(100);
                               counter++;
@@ -481,15 +523,16 @@ void loop() {
                           }
                           debugSerial.println("waiting for plan data...");
                           sendPacket((uint8_t*)"0",1);
-                        }while (LoRa_buffer[0] != 0xff );
+                        }while (LoRa_buffer[0] != 0xff );*/
                         debugSerial.println("compartment data received");
                         
                         parse_compartmentdata(&compartment_database[i] , LoRa_buffer);
                         compartment_database[i].full = true;
 
-                        ESPSerial.print(active_compartment);
+                        
                         
                         debugSerial.println("command open compartment sent");
+                        i++;
                         
                 //}
             }
@@ -542,7 +585,7 @@ void loop() {
       counter++;
   }*/
 
-  delay(3000);
+  blink(30);
 
   //delay(1000);
 }
